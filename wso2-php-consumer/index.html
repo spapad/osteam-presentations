@@ -1,0 +1,460 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+		<meta name="author" content="Stavros Papadakis, spapad@gmail.com, Open Source Team http://ostmgmt.minedu.gov.gr">
+		<meta name="description" content="Κατανάλωση υπηρεσίας από το WSO2">
+        <link rel="stylesheet" href="../assets/reveal.js-3.4.1/css/reveal.css">
+        <link rel="stylesheet" href="../assets/reveal.js-3.4.1/css/theme/white.css">
+        <link rel="stylesheet" href="../assets/highlight.js-v9.10.0/styles/tomorrow-night.css">
+        <link rel="stylesheet" href="../assets/font-awesome-4.7.0/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../assets/osteam.css">
+        <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,400i,700,700i|Ubuntu:400,400i,700,700i&amp;subset=greek" rel="stylesheet"> 
+    </head>
+    <body>
+        <div id="presentationfooter">
+            <small>
+            Μάρτιος 2017 
+            | Ομάδα Ανάπτυξης Λογισμικού Ανοικτού Κώδικα <a href="https://git.minedu.gov.gr">git.minedu.gov.gr</a> <a href="mailto:osteam@minedu.gov.gr">osteam@minedu.gov.gr</a> 
+            | Σταύρος Παπαδάκης <a href="mailto:spapad@gmail.com">spapad@gmail.com</a>
+            </small>
+        </div>
+
+        <div class="reveal" data-transition-speed="fast" data-background-transition="fade">
+            <div class="slides">
+                <section>
+                    <h2>Κατανάλωση υπηρεσίας από το κατάστημα διαλειτουργικότητας του ΥΠΠΕΘ</h2>
+                    <p><a href="http://ostmgmt.minedu.gov.gr/">Ομάδα Ανάπτυξης Λογισμικού Ανοικτού Κώδικα</a></p>
+                    <p>
+                        <small>
+                            <a href="http://ostmgmt.minedu.gov.gr/">ostmgmt.minedu.gov.gr</a> | 
+                            <a href="mailto:osteam@minedu.gov.gr">osteam@minedu.gov.gr</a> | 
+                            <a href="https://git.minedu.gov.gr">git.minedu.gov.gr</a>
+                        </small>
+                    </p>
+                </section>
+
+                <section>
+                    <section>
+                        <h2>Περί "osteam"</h2>
+                        <p class="small">Συγκρότηση με απόφαση Υπουργού Αρ.Πρωτ.: 159733/Α3/28-9-2016</p>
+                        <p class="small">Κατανενημένη ομάδα με αποσπασμένους εκπαιδευτικούς Πληροφορικής σε ΥΠ.Π.Ε.Θ και Π.Δ.Ε.</p>
+                        <p class="small">Ακολουθεί το πλαίσιο Scrum / Agile μεθοδολογία<br/>
+                            Eσωτερικός οδηγός λειτουργίας <a href="https://git.minedu.gov.gr/itminedu/osguide">git.minedu.gov.gr/itminedu/osguide</a></p>
+                        <p class="small">Διάθεση έργων από το αποθετήριο κώδικα του Υπουργείου <a href="https://git.minedu.gov.gr/itminedu">git.minedu.gov.gr/itminedu</a></p> 
+                        <p class="small">Επικοινωνία ομάδας με ομαδοσυνεργατικά εργαλεία <a href="https://mattermost.minedu.gov.gr">mattermost.minedu.gov.gr</a></p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <h2>Διαλειτουργικότητα</h2>
+                        <p>
+                            <img src="images/redmine-50-t.png" class="inline"/> <a href="http://ostmgmt.minedu.gov.gr/projects/wos2_esb">ostmgmt.minedu.gov.gr/projects/wos2_esb</a><br/>
+                            <img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr/itminedu/wso2_esb">git.minedu.gov.gr/itminedu/wso2_esb</a>
+                        </p>
+                        <p>Ομάδα Υλοποίησης Έργου</p>
+                        <p><small>Ηλιάδου Βασιλική <br/>Ασβεστάς Κώστας | Γεωργακόπουλος Παναγιώτης | Παπαδάκης Σταύρος</small></p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Πλατφόρμα διαλειτουργικότητας με χρήση ενδιάμεσου λογισμικού WSO2</h2>
+                        <p>Service Oriented Architecture Middleware Cluster</p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+<p>Πρόσβαση με ενιαίο, <br/> ελεγχόμενο και ασφαλή τρόπο<br/> 
+από ένα κεντρικό σημείο </br/>
+σε υπηρεσίες που προσφέρουν δεδομένα προς 
+κατανάλωση από πληροφοριακά συστήματα</p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+<p>Απόκρυψη πολυπλοκότητας υλοποίησης διασυνδέσεων από τον τελικό προγραμματιστή
+που καταναλώνει δεδομένα από τις υπηρεσίες διαλειτουργικότητας με Web Services</p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+<p>Διαχείριση πρόσβασης</p>
+<p>με έκδοση κωδικών για πρόσβαση στις διαθέσιμες υπηρεσίες</p>
+<p>και ορισμό πρόσβασης ανά χρήστη και ανά υπηρεσία</p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+<p>Διαχείριση κίνησης και παρακολούθηση κίνησης</p>
+<p>Έλεγχος κίνησης στα API, υποστήριξη πακέτων πρόσβασης</p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+<p>Απλοποιημένες βιβλιοθήκες και διεπαφές για προγραμματιστές εφαρμογών,<br/>
+τεκμηρίωση μέσω οδηγών κατανάλωσης και ανάπτυξης yπηρεσιών</p>
+<p><a href="https://git.minedu.gov.gr/itminedu/wso2_esb">git.minedu.gov.gr/itminedu/wso2_esb</a></p>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h2>Κατάστημα API</h2>
+                        <p><a href="https://wso2.minedu.gov.gr:9445/store">https://wso2.minedu.gov.gr:9445/store</a></p>
+                        <img src="images/store-01-frontpage.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <p>Στο κατάστημα προσφέρονται APIs που παρέχει ο WSO2 API Manager</p> 
+                        <p>Πρόσβαση στα Web API μόνο πάνω από HTTPS (SSL)</p>
+                        <p class="small">Η εγγραφή είναι προς το παρόν ελεγχόμενη</p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <h2>Συνδρομές</h2>
+                        <p>Κάθε χρήστης έχει στη διάθεση του διάφορα προφίλ εφαρμογών με τα οποία μπορεί να εγγραφεί συνδρομητής σε ένα API</p>
+                        <img src="images/store-02-subscribe.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <h2>Συνδρομές</h2>
+                        <img src="images/store-03-subscriptions.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <p>Από κάθε προφίλ εφαρμογής ο χρήστης μπορεί να παράγει access tokens</p>
+                        <img src="images/store-04-1-keys.png"/>
+                        <img src="images/store-04-2-keys.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <p>Η πλατφόρμα παρέχει λειτουργίες δημιουργίας και διαχείρισης access tokens προγραμματιστικά</p>
+                        <pre><code class="sh">
+$ curl -k \
+    -d "grant_type=password&username=Username&password=Password" \
+    -H "Authorization: Basic Base64(consumer-key:consumer-secret)" \ 
+    https://wso2.minedu.gov.gr/token
+                        </code></pre>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <h2>Δοκιμή API</h2>
+                        <p>Άμεση δοκιμή του API (swagger)</p>
+                        <img src="images/store-05-api-console.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <p>... μέχρι να υπάρξει κανονικό certificate ...</p>
+                        <img src="images/store-05-api-console-cert.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <img src="images/store-05-api-console-t1.png"/>
+                        <img src="images/store-05-api-console-t2.png"/>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <h1>Κατανάλωση API</h1>
+                        <ul>
+                            <li>Δοκιμαστικά</li>
+                            <ul>
+                                <li>RESTeasy</li>
+                                <li>RESTlet</li>
+                                <li>...και τόσα άλλα...</li>
+                            </ul>
+                            <li>Προγραμματιστικά</li>
+                            <ul>
+                                <li>cURL</li>
+                                <li>Βιβλιοθήκες σε διάφορες γλώσσες</li>
+                                <li>...</li>
+                            </ul>
+                        </ul>
+                    </section>
+                    <section>
+                        <p>RESTlet</p>
+                        <img src="images/RESTLET01.gif"/>
+                    </section>
+                    <section>
+                        <p>RESTeasy</p>
+                        <img src="images/RESTeasy01.gif"/>
+                    </section>
+                    <section>
+                        <p>cURL</p>
+                        <pre><code class="sh">
+$ curl -k -X GET --header 'Accept: text/plain' \
+    --header 'Authorization: Bearer ........' \
+    'https://wso2.minedu.gov.gr/acidtest/v1.4/queryIDnoCD?id=...'
+isStudent:false 
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <h1>Gui</h1>
+                    <p>Java based εφαρμογή</p>
+                </section>
+                <section>
+                    <section>
+                        <h1>PHP</h1>
+                        <p>Αποθετήριο προγραμμάτων κατανάλωσης API ακαδημαϊκής ταυτότητας</p>
+                        <p><a href="https://git.minedu.gov.gr/spapad/academic-id-consumer">git.minedu.gov.gr/spapad/academic-id-consumer</a></p>
+                        <p class="small">(προσωρινό αποθετήριο)</p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <h2>Δείγματα βιβλιοθηκών</h2>
+                        <ul>
+                            <li>Εφαρμογή διαδικτύου αναπτυγμένη σε SLIM framework</li>
+                            <li>Εφαρμογή διαδικτύου αναπτυγμένη σε PHP</li>
+                        </ul>
+                        <h2>Case study κατανάλωσης</h2>
+                        <ul>
+                            <li>Εφαρμογή γραμμής εντολών που καταναλώνει resources του API ακαδημαϊκής ταυτότητας</li>
+                        </ul>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <p class="small"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Βήμα πρώτο</p>
+                        <p>Βιβλιοθήκη αφαίρεσης κλήσεων GET, POST, PUT</p>
+                        <p>Κοινή για τις εφαρμογές</p>
+                        <p>Δειγματική υλοποίηση με αξιοποίηση <a href="http://php.net/manual/en/book.curl.php">php cURL</a></p>
+
+                        <p class="small">Μπορεί να αξιοποιεί οτιδήποτε<br/>
+                            <i>για παράδειγμα <a href="https://github.com/guzzle/guzzle">guzzle</a></i> <br/>
+                            αρκεί να υπάρχει ένα κατάλληλο επίπεδο αφαίρεσης</p>
+                    </section>
+                    <section>
+                        <p><img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr/spapad/academic-id-consumer/blob/master/slim-app/src/osteam/Client.php">Gr\Gov\Minedu\Osteam\Slim\Client</a></p>
+                        <pre><code class="php">
+namespace Gr\Gov\Minedu\Osteam\Slim;
+class Client {
+    public function put($uri, $payload, $headers = []) {...}
+    public function post($uri, $payload, $headers = []) {...}
+    public function get($uri, $params = [], $headers = []) {...}
+    protected function setCommonCurlOptions($ch, $uri, $headers) {...}
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Παράδειγμα: POST/cURL</p>
+                        <pre style="font-size: 0.4em"><code class="php" contenteditable>
+public function post($uri, $payload, $headers = []) {
+    $ch = curl_init();
+    $this->setCommonCurlOptions($ch, $uri, $headers);
+
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+    $result = curl_exec($ch);
+    if (curl_errno($ch)) {
+        throw new Exception("Λάθος κατά την κλήση του {$uri}. Curl error: " . curl_error($ch) . " Curl info: " . var_export(curl_getinfo($ch), true));
+    }
+    if (intval(($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE)) / 100) != 2) {
+        // πραγματοποιήθηκε κλήση αλλά δεν ήταν "επιτυχής"
+        return [
+            'success' => false,
+            'http_status' => $http_code,
+            'response' => $result
+        ];
+    }
+    curl_close($ch);
+    return [
+        'success' => true,
+        'http_status' => $http_code,
+        'response' => $result
+    ];
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Παράδειγμα: guzzle</p>
+                        <pre style="font-size: 0.4em"><code class="php" contenteditable>
+                        </code></pre>
+                    </section>
+                </section>
+                <section>
+                    <section>
+                        <p class="small"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Βήμα δεύτερο</p>
+                        <p>Βιβλιοθήκη αφαίρεσης λειτουργιών api</p>
+                        <p>Κοινή για τις εφαρμογές</p>
+                        <p>Μία τουλάχιστο μέθοδο ανά λειτουργία</p>
+                        <p class="small">και όσες περισσότερες ανά <br/>
+                        "περίπτωση χρήσης"</p>
+                    </section>
+                    <section>
+                        <p><img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr/spapad/academic-id-consumer/blob/master/data-extract/src/Extract.php">Gr\Gov\Minedu\Osteam\App\Extract</a></p>
+                        <pre><code class="php">
+namespace Gr\Gov\Minedu\Osteam\App; 
+use Gr\Gov\Minedu\Osteam\Slim\Client;
+
+class Extract {
+    public function getAcademicID($amka, $auth_header_student) {...}
+    public function getStudentInformation($academic_id, $auth_header_student) {...}
+    protected function generateAuth() {...}
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Παράδειγμα: getAcademicID()</p>
+                        <pre style="font-size: 0.4em"><code class="php" contenteditable>
+if (preg_match('/^[0-9]{11}$/', $amka) !== 1) {
+    return 'ERROR:Service Call Parameters Error, student amka id must be 11 digit number';
+}
+
+$data = [ 'fields' => 'academicID' ];
+$headers = [
+    "Authorization: {$auth_header_student}",
+    'Content-Type: application/json',
+    'Accept: */*',
+    'User-Agent: osteam php command line client'
+];
+
+try {
+    $results = $this->client->get($this->settings['base_uri_student'] . "/{$amka}", $data, $headers);
+} catch (\Exception $e) {
+    return "ERROR:" . $e->getMessage();
+}
+
+if ($results['success'] === false) {
+    return "ERROR:{$results['response']}, {$results['http_status']}";
+}
+return $results['response'];
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Αντίστοιχα και σε άλλες περιπτώσεις...</p>
+                        <p><img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr/spapad/academic-id-consumer/blob/master/slim-app/src/osteam/App.php">Gr\Gov\Minedu\Osteam\Slim\{BaseApp,App}</a></p>
+                        <pre><code class="php">
+class App extends BaseApp {
+    public function queryID($req, $res, $args) {
+        $identity = $req->getQueryParam('id', 0);
+        // input validation/sanitization 
+        $data = json_encode(["SubmissionCode" => $identity]);
+        $auth = $this->generateAuth();
+        $headers = [
+            "Authorization: {$auth}",
+            'Content-Type: application/json',
+            'User-Agent: Academic ID SLIM Client/v1.0 osteam'
+        ];
+        $results = $this->client->post($endpoint, $data, $headers);
+        //...check..check...check 
+        return $res->withJson(array_merge(
+            BaseApp::coreResponseData(false), 
+            [ 'message' => ]
+        ), 400);
+    }
+}        
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
+                        <p class="small">Βήμα τρίτο</p>
+                        <p>Λειτουργίες εφαρμογής για τον τελικό χρήστη</p>
+                        <p><img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr/spapad/academic-id-consumer/blob/master/data-extract/index.php">Command line application</a></p>
+                    </section>
+                    <section>
+                        <p><strong>Αρχείο ρυθμίσεων</strong></p>
+                        <pre><code class="php" contenteditable>
+$settings = require(__DIR__ . '/settings.php');
+//////////////////////////////////////////////
+return [
+    'osteam_codebase' => __DIR__ . '/src',
+    'base_uri_student' => 'https://wso2.minedu.gov.gr/academicid',
+    'base_uri_query' => '',
+    'username' => 'username-for-endpoint',
+    'password' => 'password-for-endpoint',
+    'auth_header_student' => 'Bearer ...', // wso2 auth header 
+    'timeout' => 1, // number of seconds between web service calls
+    'NO_SAFE_CURL' => true
+];
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p><strong>Autoloading (*)</strong></p>
+                        <pre><code class="php" contenteditable>
+// barebone app - autoload classes from src/ dir
+spl_autoload_register(function ($class_name) use ($settings) {
+    $class_name_parts = explode('\\', $class_name);
+    $class_filename = $settings['osteam_codebase'] . '/' 
+        . end($class_name_parts) . '.php';
+    if (file_exists($class_filename)) {
+        include $class_filename;
+        if (class_exists($class_name)) {
+            return true;
+        }
+    }
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p><strong>Κλήσεις</strong></p>
+                        <pre><code class="php" contenteditable>
+use Gr\Gov\Minedu\Osteam\Slim\Client;
+use Gr\Gov\Minedu\Osteam\App\Extract;
+$client = new Client($settings);
+$app = new Extract($client, $settings); 
+try {
+    $response = $app->getAcademicID($amka, $settings['auth_header_student']);
+    ...
+} catch (\Exception $e) {
+    ...
+}
+$get = array_walk($csv_data, function (&$v, $k) use ($app, $amka_column, $settings, $out_file_fp) {
+    try {
+        $response = $app->getStudentInformation($academic_id, $settings['auth_header_query']);
+        ...
+    } catch (\Exception $e) {
+        ...
+    }
+}    
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+					<h2>Βιβλιοθήκη</h2>
+                    <pre style="font-size: 0.4em"><code class="php">
+protected function setCommonCurlOptions($ch, $uri, $headers)
+{
+    curl_setopt($ch, CURLOPT_URL, $uri);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+    curl_setopt($ch, CURLOPT_USERAGENT, "OSTEAM SLIM client");
+    if (isset($this->_settings['NO_SAFE_CURL']) && $this->_settings['NO_SAFE_CURL'] === true) {
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+    }
+
+    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+    curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
+    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+    if ($this->_debug === true) {
+        curl_setopt($ch, CURLOPT_VERBOSE, true);
+    }
+}
+					</code></pre>
+                </section>
+
+                <section>
+                    <h1>Ευχαριστούμε!</h1>
+                    <p><i class="fa fa-ellipsis-h"></i></p>
+                    <p>
+                        <small>
+                            <img src="images/redmine-50-t.png" class="inline"/> <a href="http://ostmgmt.minedu.gov.gr/">ostmgmt.minedu.gov.gr</a> <br/>
+                            <i class="fa fa-envelope-o"></i> <a href="mailto:osteam@minedu.gov.gr">osteam@minedu.gov.gr</a> <br/>
+                            <img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr">git.minedu.gov.gr</a>
+                        </small>
+                    </p>
+                </section>
+            </div>
+        </div>
+        <script src="../assets/reveal.js-3.4.1/js/reveal.js"></script>
+        <script src="../assets/highlight.js-v9.10.0/highlight.pack.js"></script>
+        <script>
+            Reveal.initialize({
+                controls: true,
+				progress: true,
+				history: true,
+				center: true,
+				transition: 'convex', // none/fade/slide/convex/concave/zoom
+            });
+            hljs.initHighlightingOnLoad();
+        </script>
+    </body>
+</html>

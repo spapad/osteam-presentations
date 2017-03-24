@@ -1,0 +1,110 @@
+while ((!done) && (i<buffer.size())) {
+          if ((i > 0) && (i<buffer.size())) { 
+          
+          String[] filteredResults=null;
+          String[] filter=buffer.get(i).trim().split(";");
+          String response=edetConnect.clientConnectNoPostData(false,"GET",false,false,true,"Authorization",false,null,null,URL+"/student/"+filter[0].trim()+"?fields=academicID","ws02.minedu.gov.gr","DesktopClient/v1.0 osteam@minedu.gov.gr",data);
+         // System.out.println(response);
+          if (response.charAt(0) == '{')
+          {
+             errorresults.add(filter[0].trim()+";"+response); 
+          } else if (response.equals("false")){
+             initialresults.add(filter[0].trim()+";"+response); 
+          }
+          String[] responseFilter=response.split(",");
+          if (responseFilter[0].equals("Προπτυχιακός") || responseFilter[0].equals("Μεταπτυχιακός") || responseFilter[0].equals("Διδακτορικός")) {
+              
+             String response2=null;
+             
+             if (responseFilter[0].equals("Προπτυχιακός"))
+             response2=edetConnect.clientConnectNoPostData(false,"GET",false,false,true,"Authorization",false,null,null,URL+"/queryID?"+"id="+responseFilter[1].trim()+"&username="+credentials[2]+"&password="+credentials[3]+"&fields=departmentName,entryYear","ws02.minedu.gov.gr","DesktopClient/v1.0 osteam@minedu.gov.gr",data);
+             else {
+               response2=edetConnect.clientConnectNoPostData(false,"GET",false,false,true,"Authorization",false,null,null,URL+"/queryID?"+"id="+responseFilter[1].trim()+"&username="+credentials[2]+"&password="+credentials[3]+"&fields=departmentName,postGraduateProgram,entryYear","ws02.minedu.gov.gr","DesktopClient/v1.0 osteam@minedu.gov.gr",data);
+               String[] test=response2.split(",");
+           //    if (test.length != 3)
+           //    response2=edetConnect.clientConnectNoPostData(false,"GET",false,false,true,"Authorization",false,null,null,URL+"/queryID?"+"id="+responseFilter[1].trim()+"&username="+credentials[2]+"&password="+credentials[3]+"&fields=departmentName,entryYear","ws02.minedu.gov.gr","DesktopClient/v1.0 osteam@minedu.gov.gr",data);
+             }
+             
+             
+             if (!response2.equals("")) { 
+              filteredResults=response2.split(","); 
+             }
+             
+             if (responseFilter[0].equals("Προπτυχιακός")) {
+             this.UndergraduateRecordsCheck++;
+             this.SuccessfulRecordsCheck++;
+             }
+             else if (responseFilter[0].equals("Μεταπτυχιακός")) {
+             this.PostgraduateRecordsCheck++;
+             this.SuccessfulRecordsCheck++;
+             } else if (responseFilter[0].equals("Διδακτορικός")) {
+               this.PhdRecordsCheck++;
+               this.SuccessfulRecordsCheck++;
+             }
+          } else if (responseFilter[0].equals("false"))
+              this.FailedRecordsCheck++;
+          else
+              this.UnknownStatusRecordsCheck++;
+        
+       if (!this.delayvalue.getText().equals("0")) {
+          try {
+            Thread.currentThread().sleep(Integer.parseInt(this.delayvalue.getText()));
+          } catch (Exception ex) {
+            
+          } 
+       }
+         
+          String mandatoryYears="4";
+          bar.setValue(i);
+      //    area.append(format);
+           if (filteredResults != null) {
+          
+           if (filteredResults[0].contains("ΙΑΤΡΙΚΗΣ") && filteredResults[0].contains("ΠΑΝΕΠΙΣΤΗΜΙΟ"))
+             mandatoryYears="6";
+           else if (filteredResults[0].contains("ΠΟΛΥΤΕΧΝΕΙΟ") || filteredResults[0].contains("ΠΟΛΥΤΕΧΝΙΚΗ"))
+             mandatoryYears="5";
+           else if (filteredResults[0].contains("ΓΕΩΠΟΝΙΚΟ") && filteredResults[0].contains("ΠΑΝΕΠΙΣΤΗΜΙΟ"))
+             mandatoryYears="5";
+           else if (filteredResults[0].contains("ΓΕΩΠΟΝΙΚH") && filteredResults[0].contains("ΠΑΝΕΠΙΣΤΗΜΙΟ"))
+             mandatoryYears="5";
+           else if (filteredResults[0].contains("ΓΕΩΠΟΝΙΑΣ") && filteredResults[0].contains("ΠΑΝΕΠΙΣΤΗΜΙΟ"))
+             mandatoryYears="5";
+           else if (filteredResults[0].contains("ΜΗΧΑΝΙΚΩΝ") && filteredResults[0].contains("ΠΑΝΕΠΙΣΤΗΜΙΟ"))
+             mandatoryYears="5";
+           else if (filteredResults[0].contains("ΜΗΧΑΝΙΚΩΝ") && filteredResults[0].contains("ΕΚΠΑΙΔΕΥΤΙΚΩΝ"))
+             mandatoryYears="5";
+           else if (filteredResults[0].contains("ΑΓΡΟΤΙΚΗΣ") && filteredResults[0].contains("ΠΑΝΕΠΙΣΤΗΜΙΟ"))
+             mandatoryYears="5";
+           
+           
+           if (responseFilter[0].equals("Μεταπτυχιακός"))
+             mandatoryYears="2";
+           else if (responseFilter[0].equals("Διδακτορικός"))
+             mandatoryYears="5";
+           
+           if ((filteredResults.length == 3) && responseFilter[0].equals("Προπτυχιακός")) 
+           response=filter[0].trim()+";"+filteredResults[0]+filteredResults[1]+";"+mandatoryYears+";"+filteredResults[2]+";"+responseFilter[0];    
+           else if ((filteredResults.length == 2) && responseFilter[0].equals("Προπτυχιακός")) 
+           response=filter[0].trim()+";"+filteredResults[0]+";"+mandatoryYears+";"+filteredResults[1]+";"+responseFilter[0];
+           else {
+            int entryYearPosition=0;
+            String schoolName="";
+            for(int l=0;l<filteredResults.length;l++) {
+              if (this.isParsableToInt(filteredResults[l])) {
+                entryYearPosition=l;
+                break;
+              } else {
+               if (schoolName.equals(""))
+               schoolName=schoolName+filteredResults[l];
+               else
+               schoolName=schoolName+" "+filteredResults[l];
+              }
+            }
+            response=filter[0].trim()+";"+schoolName+";"+mandatoryYears+";"+filteredResults[entryYearPosition]+";"+responseFilter[0];
+           }
+           
+           results.add(response);
+          } 
+          
+          String finalresponse="\nResponse "+i+" for AMKA:"+filter[0].trim()+" is: "+response+"\n";
+          detailedresults.add(finalresponse);

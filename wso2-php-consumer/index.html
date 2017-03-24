@@ -22,7 +22,7 @@
         <div class="reveal" data-transition-speed="fast" data-background-transition="fade">
             <div class="slides">
                 <section>
-                    <h2>Κατανάλωση υπηρεσίας από το κατάστημα διαλειτουργικότητας του ΥΠΠΕΘ</h2>
+                    <h2>Κατανάλωση υπηρεσίας ιστού από την πλατφόρμα διαλειτουργικότητας του ΥΠΠΕΘ</h2>
                     <p><a href="http://ostmgmt.minedu.gov.gr/">Ομάδα Ανάπτυξης Λογισμικού Ανοικτού Κώδικα</a></p>
                     <p>
                         <small>
@@ -207,6 +207,54 @@ isStudent:false
 
                 <section>
                     <section>
+                        <h1>Case study</h1>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <img src="images/java-settings.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <img src="images/java-settings-read.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <img src="images/java-run.png"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <img src="images/java-run-result.jpg"/>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                    </section>
+                    <section>
+                        <pre><code class="sh">
+spapad@developer:~/WWWroot/_vhosts/code-samples/academic-id/data-extract-info (master)     [14:42:07]
+$ php index.php --input ANAZITISI_ENERGON_FOITITON.csv --amka 0 --line 2  
+Ζητήσατε να γίνει έλεγχος από τo αρχείo: ANAZITISI_ENERGON_FOITITON.csv
+         Έναρξη στοιχείων από τη γραμμή: 2
+                    Αριθμός στήλης ΑΜΚΑ: 0
+            Αποθήκευση στο αρχείο (csv): out.csv
+Έλεγχος όλων των εγγραφών
+POP 1 lines...
+...
+=========================================
+Άντληση academic id από ΑΜΚΑ
+...
+Results:
+% results:
+ Προπτυχιακοί: 0.92% (135)
+Μεταπτυχιακοί: 0.29% (43)
+ Διδακτορικοί: 0.01% (2)
+         Άλλο: 98.77% (0)
+=========================================
+Άντληση στοιχείων από academic id
+...
+                        </code></pre>
+                    </section>
+                </section>
+
+                <section>
+                    <section>
                         <p class="small"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Βήμα πρώτο</p>
                         <p>Βιβλιοθήκη αφαίρεσης κλήσεων GET, POST, PUT</p>
                         <p>Κοινή για τις εφαρμογές</p>
@@ -264,9 +312,7 @@ public function post($uri, $payload, $headers = []) {
                         </code></pre>
                     </section>
                     <section>
-                        <p>Παράδειγμα: guzzle</p>
-                        <pre style="font-size: 0.4em"><code class="php" contenteditable>
-                        </code></pre>
+                        <p>Παράδειγμα guzzle μεσα από Drupal code παρακάτω...</p>
                     </section>
                 </section>
                 <section>
@@ -428,6 +474,67 @@ $get = array_walk($csv_data, function (&$v, $k) use ($app, $amka_column, $settin
 }    
                         </code></pre>
                     </section>
+                    <section>
+                        <pre style="font-size: 0.4em"><code class="php" contenteditable>
+try {
+    $response = $app->getAcademicID($amka, $settings['auth_header_student']);
+    if (($response === false) || ($response === 'false')) {
+        $beneficiary_name = '';
+        $academic_id = null;
+    } else {
+        list ($beneficiary_name, $academic_id) = explode(',', $response);
+    }
+
+    $response = $app->getStudentInformation($academic_id, $settings['auth_header_query']);
+    // gets entryYear,studentshipType,departmentName,postGraduateProgram
+    if (mb_substr($response, 0, 5) === 'ERROR') {
+    } else {
+        $parts = explode(',', $response, 3);
+        if (count($parts) === 3) {
+            $entry_year = $parts[0];
+            $studentship_type = $parts[1];
+            $first = mb_substr($studentship_type, 0, 1);
+            $department_name = $parts[2];
+            if (mb_substr($department_name, -1, 1, 'utf8') == ',') {
+                $department_name = mb_substr($department_name, 0, mb_strlen($department_name, 'utf8') - 1);
+            }
+            if ($first === 'Δ') { // Διδακτορικό
+                $min_years = 5;
+            } elseif ($first === 'Μ') { // Μεταπτυχιακό
+                $min_years = 2;
+            } elseif (((mb_strpos($department_name, 'ΙΑΤΡΙΚΗΣ') !== false) ||
+                (mb_strpos($department_name, 'ΜΗΧΑΝΙΚΩΝ') !== false))
+                && mb_strpos($department_name, 'ΠΑΝΕΠΙΣΤΗΜΙΟ') !== false) {
+                $min_years = 6;
+            } elseif (mb_strpos($department_name, 'ΕΚΠΑΙΔΕΥΤΙΚΩΝ') !== false 
+                && mb_strpos($department_name, 'ΜΗΧΑΝΙΚΩΝ') !== false) {
+                $min_years = 5;
+            } elseif (((mb_strpos($department_name, 'ΓΕΩΠΟΝΙΚΗ') !== false) ||
+                    (mb_strpos($department_name, 'ΓΕΩΠΟΝΙΑΣ') !== false) ||
+                    (mb_strpos($department_name, 'ΑΓΡΟΤΙΚΗΣ') !== false) ||
+                    (mb_strpos($department_name, 'ΓΕΩΠΟΝΙΚΟ') !== false))
+                     && mb_strpos($department_name, 'ΠΑΝΕΠΙΣΤΗΜΙΟ') !== false) {
+               $min_years = 5;
+            } elseif (mb_strpos($department_name, 'ΠΟΛΥΤΕΧΝΕΙΟ') !== false
+                || mb_strpos($department_name, 'ΠΟΛΥΤΕΧΝΙΚΗ') !== false) {
+                $min_years = 5;
+            } else {
+                $min_years = 4;
+            }
+        } else {
+            // ... 
+        }
+    }
+} catch (\Exception $e) {
+    // ...
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <img src="images/java-code.png"/>
+                        <a href="images/JavaConsumptionAlgorithm.txt">JavaConsumptionAlgorithm.java</a>
+                    </section>
+
                     <section>
                         <p>Και στο Yii με χρήση params.php</p>
                         <pre><code class="php">

@@ -182,27 +182,26 @@ isStudent:false
                     </section>
                 </section>
                 <section>
-                    <h1>Gui</h1>
-                    <p>Java based εφαρμογή</p>
-                </section>
-                <section>
                     <section>
-                        <h1>PHP</h1>
-                        <p>Αποθετήριο προγραμμάτων κατανάλωσης API ακαδημαϊκής ταυτότητας</p>
-                        <p><a href="https://git.minedu.gov.gr/spapad/academic-id-consumer">git.minedu.gov.gr/spapad/academic-id-consumer</a></p>
-                        <p class="small">(προσωρινό αποθετήριο)</p>
-                        <p><i class="fa fa-chevron-circle-down"></i></p>
+                        <h2>Δείγματα βιβλιοθηκών, εφαρμογών</h2>
+                        <ul>
+                            <li>Desktop app αναπτυγμένη σε Java</li>
+                            <li>Web app αναπτυγμένη με το SLIM framework</li>
+                            <li>Barebone εφαρμογή αναπτυγμένη σε PHP</li>
+                        </ul>
+                        <h2>Case study</h2>
+                        <ul>
+                            <li>Εφαρμογές (gui, command line) κατανάλωσης resources του API ακαδημαϊκής ταυτότητας</li>
+                        </ul>
                     </section>
                     <section>
-                        <h2>Δείγματα βιβλιοθηκών</h2>
-                        <ul>
-                            <li>Εφαρμογή διαδικτύου αναπτυγμένη σε SLIM framework</li>
-                            <li>Εφαρμογή διαδικτύου αναπτυγμένη σε PHP</li>
-                        </ul>
-                        <h2>Case study κατανάλωσης</h2>
-                        <ul>
-                            <li>Εφαρμογή γραμμής εντολών που καταναλώνει resources του API ακαδημαϊκής ταυτότητας</li>
-                        </ul>
+                        <p class="small">προσωρινά αποθετήρια git.minedu.gov.gr</p>
+                        <h2>Java</h2>
+                        <p><a href="https://git.minedu.gov.gr/pgeorg/WebServiceClientsLibrariesAndApps">/pgeorg/WebServiceClientsLibrariesAndApps</a></p>
+                        <h2>PHP</h2>
+                        <p><a href="https://git.minedu.gov.gr/spapad/academic-id-consumer">/spapad/academic-id-consumer</a></p>
+                        <p><a href="https://git.minedu.gov.gr/spapad/samples">/spapad/samples</a></p>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                 </section>
 
@@ -214,7 +213,10 @@ isStudent:false
                         <p>Δειγματική υλοποίηση με αξιοποίηση <a href="http://php.net/manual/en/book.curl.php">php cURL</a></p>
 
                         <p class="small">Μπορεί να αξιοποιεί οτιδήποτε<br/>
-                            <i>για παράδειγμα <a href="https://github.com/guzzle/guzzle">guzzle</a></i> <br/>
+                            <i><a href="https://github.com/guzzle/guzzle">guzzle</a></i> | 
+                            <i><a href="https://github.com/yiisoft/yii2-httpclient">Yii2 httpclient</a></i> |
+                            <i><a href="https://github.com/linslin/Yii2-Curl">Yii2-Curl</a></i> |
+                            ...<br/>
                             αρκεί να υπάρχει ένα κατάλληλο επίπεδο αφαίρεσης</p>
                     </section>
                     <section>
@@ -317,7 +319,7 @@ return $results['response'];
                         </code></pre>
                     </section>
                     <section>
-                        <p>Αντίστοιχα και σε άλλες περιπτώσεις...</p>
+                        <p>Αντίστοιχα και σε άλλες περιπτώσεις... SLIM</p>
                         <p><img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr/spapad/academic-id-consumer/blob/master/slim-app/src/osteam/App.php">Gr\Gov\Minedu\Osteam\Slim\{BaseApp,App}</a></p>
                         <pre><code class="php">
 class App extends BaseApp {
@@ -335,17 +337,54 @@ class App extends BaseApp {
         //...check..check...check 
         return $res->withJson(array_merge(
             BaseApp::coreResponseData(false), 
-            [ 'message' => ]
+            [ 'message' => '...']
         ), 400);
     }
 }        
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Yii αντίστοιχα...</p>
+                        <pre><code class="php">
+namespace common\components;
+
+use Yii;
+use yii\base\Component;
+use yii\base\InvalidConfigException;
+
+class MyAwesomeApiProvider extends Component {
+    public function init() {
+        parent::init();
+        /* κλπ */
+    }
+    public function getAcademicID() {
+        /* κλπ */
+    }
+}
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Π.χ. params.php και χρήση</p>
+                        <pre><code class="php">
+return [
+    // ... 
+    'components' => [
+        'apiProvider' => [
+            'class' => 'common\components\MyAwesomeApiProvider',
+            'param_param_param' => 'whatever'
+        ],
+    ],
+    // ... 
+];
+//////////////////////////////////////
+Yii::$app->apiProvider->getAcademicID();
                         </code></pre>
                     </section>
                 </section>
 
                 <section>
                     <section>
-                        <p class="small">Βήμα τρίτο</p>
+                        <p class="small"><i class="fa fa-angle-double-right" aria-hidden="true"></i> Βήμα τρίτο</p>
                         <p>Λειτουργίες εφαρμογής για τον τελικό χρήστη</p>
                         <p><img src="images/gitlab-50-t.png" class="inline"/> <a href="https://git.minedu.gov.gr/spapad/academic-id-consumer/blob/master/data-extract/index.php">Command line application</a></p>
                     </section>
@@ -406,29 +445,6 @@ $get = array_walk($csv_data, function (&$v, $k) use ($app, $amka_column, $settin
 }    
                         </code></pre>
                     </section>
-                </section>
-
-                <section>
-					<h2>Βιβλιοθήκη</h2>
-                    <pre style="font-size: 0.4em"><code class="php">
-protected function setCommonCurlOptions($ch, $uri, $headers)
-{
-    curl_setopt($ch, CURLOPT_URL, $uri);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-    curl_setopt($ch, CURLOPT_USERAGENT, "OSTEAM SLIM client");
-    if (isset($this->_settings['NO_SAFE_CURL']) && $this->_settings['NO_SAFE_CURL'] === true) {
-        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-    }
-
-    curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
-    curl_setopt($ch, CURLOPT_MAXREDIRS, 3);
-    curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-    if ($this->_debug === true) {
-        curl_setopt($ch, CURLOPT_VERBOSE, true);
-    }
-}
-					</code></pre>
                 </section>
 
                 <section>

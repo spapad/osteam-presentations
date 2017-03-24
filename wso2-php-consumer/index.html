@@ -363,23 +363,6 @@ class MyAwesomeApiProvider extends Component {
 }
                         </code></pre>
                     </section>
-                    <section>
-                        <p>Π.χ. params.php και χρήση</p>
-                        <pre><code class="php">
-return [
-    // ... 
-    'components' => [
-        'apiProvider' => [
-            'class' => 'common\components\MyAwesomeApiProvider',
-            'param_param_param' => 'whatever'
-        ],
-    ],
-    // ... 
-];
-//////////////////////////////////////
-Yii::$app->apiProvider->getAcademicID();
-                        </code></pre>
-                    </section>
                 </section>
 
                 <section>
@@ -443,6 +426,48 @@ $get = array_walk($csv_data, function (&$v, $k) use ($app, $amka_column, $settin
         ...
     }
 }    
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Και στο Yii με χρήση params.php</p>
+                        <pre><code class="php">
+return [
+    // ... 
+    'components' => [
+        'apiProvider' => [
+            'class' => 'common\components\MyAwesomeApiProvider',
+            'param_param_param' => 'whatever'
+        ],
+    ],
+    // ... 
+];
+//////////////////////////////////////
+Yii::$app->apiProvider->getAcademicID();
+                        </code></pre>
+                    </section>
+                    <section>
+                        <p>Και σε Drupal</p>
+                        <pre><code class="php">
+// credits https://git.minedu.gov.gr/ackatsaros 
+// inject στο drupal contructor
+use GuzzleHttp\Client;
+public function __construct(Client $http_client) {
+    $this->httpClient = $http_client;
+}
+public static function create(ContainerInterface $container) {
+    return new static($container->get('http_client');
+}
+//////////////////////////////////////
+$this->httpClient = new Client(['verify' => false ]);
+$res_amka_checker = $this->httpClient->get($url, array('headers' => array('Authorization' => $this->key)));
+if (!is_null($res_amka_checker) && $res_amka_checker->getStatusCode() == 200) {
+    $check_result_amka = $res_amka_checker->getBody();
+    if($check_result_amka == 'false') {
+    } else if ($check_result_amka == 'true') {
+    }
+} else {
+    $form_state->setErrorByName('amkauser', t('Σφάλμα ελέγχου ΑΜΚΑ'));
+}
                         </code></pre>
                     </section>
                 </section>

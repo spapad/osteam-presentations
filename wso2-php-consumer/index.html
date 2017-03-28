@@ -38,7 +38,7 @@
                         <h2>Περί "osteam"</h2>
                         <p class="small">Συγκρότηση με απόφαση Υπουργού Αρ.Πρωτ.: 159733/Α3/28-9-2016</p>
                         <p class="small">Κατανενημένη ομάδα με αποσπασμένους εκπαιδευτικούς Πληροφορικής σε ΥΠ.Π.Ε.Θ και Π.Δ.Ε.</p>
-                        <p class="small">Ακολουθεί το πλαίσιο Scrum / Agile μεθοδολογία<br/>
+                        <p class="small">Ακολουθεί το πλαίσιο Scrum / Agile μεθοδολογία <br/>
                             Eσωτερικός οδηγός λειτουργίας <a href="https://git.minedu.gov.gr/itminedu/osguide">git.minedu.gov.gr/itminedu/osguide</a></p>
                         <p class="small">Διάθεση έργων από το αποθετήριο κώδικα του Υπουργείου <a href="https://git.minedu.gov.gr/itminedu">git.minedu.gov.gr/itminedu</a></p> 
                         <p class="small">Επικοινωνία ομάδας με ομαδοσυνεργατικά εργαλεία <a href="https://mattermost.minedu.gov.gr">mattermost.minedu.gov.gr</a></p>
@@ -61,32 +61,32 @@
                         <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                     <section>
-<p>Πρόσβαση με ενιαίο, <br/> ελεγχόμενο και ασφαλή τρόπο<br/> 
-από ένα κεντρικό σημείο </br/>
-σε υπηρεσίες που προσφέρουν δεδομένα προς 
-κατανάλωση από πληροφοριακά συστήματα</p>
+                        <p>Πρόσβαση με ενιαίο, <br/> ελεγχόμενο και ασφαλή τρόπο<br/> 
+                        από ένα κεντρικό σημείο <br/>
+                        σε υπηρεσίες που προσφέρουν δεδομένα προς 
+                        κατανάλωση από πληροφοριακά συστήματα</p>
                         <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                     <section>
-<p>Απόκρυψη πολυπλοκότητας υλοποίησης διασυνδέσεων από τον τελικό προγραμματιστή
-που καταναλώνει δεδομένα από τις υπηρεσίες διαλειτουργικότητας με Web Services</p>
+                        <p>Απόκρυψη πολυπλοκότητας υλοποίησης διασυνδέσεων από τον τελικό προγραμματιστή
+                        που καταναλώνει δεδομένα από τις υπηρεσίες διαλειτουργικότητας με Web Services</p>
                         <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                     <section>
-<p>Διαχείριση πρόσβασης</p>
-<p>με έκδοση κωδικών για πρόσβαση στις διαθέσιμες υπηρεσίες</p>
-<p>και ορισμό πρόσβασης ανά χρήστη και ανά υπηρεσία</p>
+                        <p>Διαχείριση πρόσβασης</p>
+                        <p>με έκδοση κωδικών για πρόσβαση στις διαθέσιμες υπηρεσίες</p>
+                        <p>και ορισμό πρόσβασης ανά χρήστη και ανά υπηρεσία</p>
                         <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                     <section>
-<p>Διαχείριση κίνησης και παρακολούθηση κίνησης</p>
-<p>Έλεγχος κίνησης στα API, υποστήριξη πακέτων πρόσβασης</p>
+                        <p>Διαχείριση κίνησης και παρακολούθηση κίνησης</p>
+                        <p>Έλεγχος κίνησης στα API, υποστήριξη πακέτων πρόσβασης</p>
                         <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                     <section>
-<p>Απλοποιημένες βιβλιοθήκες και διεπαφές για προγραμματιστές εφαρμογών,<br/>
-τεκμηρίωση μέσω οδηγών κατανάλωσης και ανάπτυξης yπηρεσιών</p>
-<p><a href="https://git.minedu.gov.gr/itminedu/wso2_esb">git.minedu.gov.gr/itminedu/wso2_esb</a></p>
+                        <p>Απλοποιημένες βιβλιοθήκες και διεπαφές για προγραμματιστές εφαρμογών,<br/>
+                        τεκμηρίωση μέσω οδηγών κατανάλωσης και ανάπτυξης yπηρεσιών</p>
+                        <p><a href="https://git.minedu.gov.gr/itminedu/wso2_esb">git.minedu.gov.gr/itminedu/wso2_esb</a></p>
                     </section>
                 </section>
                 <section>
@@ -140,11 +140,14 @@
                     <section>
                         <p>Η πλατφόρμα παρέχει λειτουργίες δημιουργίας και διαχείρισης access tokens προγραμματιστικά</p>
                         <pre><code class="sh">
-$ curl -k \
-    -d "grant_type=password&username=Username&password=Password" \
+$ curl -k -d "grant_type=password&username=Username&password=Password" \
     -H "Authorization: Basic Base64(consumer-key:consumer-secret)" \ 
     https://wso2.minedu.gov.gr/token
+{"access_token":"01234567-0123-0123-0123-012345678901",
+ "refresh_token":"01234567-0123-0123-0123-012345678902",
+ "scope":"default","token_type":"Bearer","expires_in":3210} 
                         </code></pre>
+                        <p class="small"><a href="https://docs.wso2.com/display/AM210/Token+API">Πλήρες token API</a></p>
                         <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                     <section>
@@ -211,6 +214,7 @@ isStudent:false
                         <ul>
                             <li>Εφαρμογές (gui, command line) κατανάλωσης resources του API ακαδημαϊκής ταυτότητας</li>
                         </ul>
+                        <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                     <section>
                         <p class="small">προσωρινά αποθετήρια git.minedu.gov.gr</p>
@@ -219,7 +223,6 @@ isStudent:false
                         <h2>PHP</h2>
                         <p><a href="https://git.minedu.gov.gr/spapad/academic-id-consumer">/spapad/academic-id-consumer</a></p>
                         <p><a href="https://git.minedu.gov.gr/spapad/samples">/spapad/samples</a></p>
-                        <p><i class="fa fa-chevron-circle-down"></i></p>
                     </section>
                 </section>
 

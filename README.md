@@ -8,3 +8,5 @@
 
 1. Παρουσίαση για την κατανάλωση υπηρεσίας ιστού από την πλατφόρμα διαλειτουργικότητας του ΥΠΠΕΘ,
 με έμφαση στη λύση PHP ([wso2-php-consumer](./wso2-php-consumer/index.html))
+
+> Βασισμένο στο [reveal-presentation-skeleton](https://git.minedu.gov.gr/spapad/reveal-presentation-skeleton)
